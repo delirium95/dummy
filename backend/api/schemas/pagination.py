@@ -1,6 +1,6 @@
 from typing import Generic, TypeVar
 
-from fastapi import Query
+from fastapi import HTTPException, Query
 from pydantic import BaseModel, ConfigDict, Field
 
 from domain.shared.pagination import PageRequest, SortDirection, SortSpec

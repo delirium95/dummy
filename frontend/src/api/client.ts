@@ -1,7 +1,6 @@
 import type { ProblemDetail } from '../types/domain';
 
-const BASE_URL =
-  import.meta.env.VITE_API_BASE_URL?.trim() || 'http://localhost:8000';
+const BASE_URL = import.meta.env.VITE_API_BASE_URL?.trim() || 'http://localhost:8000';
 
 export class ApiError extends Error {
   public readonly status: number;
@@ -31,10 +30,7 @@ async function parseError(response: Response): Promise<ApiError> {
   return new ApiError(response.status, code, detail);
 }
 
-async function request<T>(
-  path: string,
-  init: RequestInit = {},
-): Promise<T> {
+async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
   const response = await fetch(`${BASE_URL}${path}`, {
     headers: {
       'Content-Type': 'application/json',

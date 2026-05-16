@@ -44,7 +44,7 @@ class Tags(ValueObject):
     @field_validator("values", mode="before")
     @classmethod
     def _normalise(cls, raw: object) -> tuple[str, ...]:
-        if not isinstance(raw, (list, tuple)):
+        if not isinstance(raw, list | tuple):
             raise TypeError("tags must be a list or tuple")
         seen: list[str] = []
         for tag in raw:

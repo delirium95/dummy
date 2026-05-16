@@ -23,11 +23,7 @@ export function Pagination({ total, limit, offset, onChange }: Props): JSX.Eleme
       <span>
         Page {page} of {pages} ({total} total)
       </span>
-      <button
-        type="button"
-        onClick={() => onChange(offset + limit)}
-        disabled={!canNext}
-      >
+      <button type="button" onClick={() => onChange(offset + limit)} disabled={!canNext}>
         Next →
       </button>
     </nav>
