@@ -1,3 +1,5 @@
+import { UsersPage } from './pages/UsersPage';
+
 export function App(): JSX.Element {
-  return <main>App scaffold</main>;
+  return <UsersPage />;
 }
