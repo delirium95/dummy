@@ -18,7 +18,7 @@ class UserRepository(AbstractRepository[UserID, UserModel]):
     async def add(self, obj: UserModel, /) -> UserModel: ...
 
     @abstractmethod
-    async def create(self, data: NewUserData, /) -> UserModel:
+    async def create(self, data: NewUserData, /, *, now: datetime) -> UserModel:
         """Insert a new user, letting the database assign the id.
 
         Raises:
