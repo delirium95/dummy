@@ -70,7 +70,7 @@ export function UsersPage(): JSX.Element {
       reload();
     } catch (e: unknown) {
       if (e instanceof ApiError) {
-        setSyncMessage(`Sync failed: ${e.detail || e.message}`);
+        setSyncMessage(`Sync failed: ${e.message}`);
       } else if (e instanceof Error) {
         setSyncMessage(`Sync failed: ${e.message}`);
       } else {
@@ -95,7 +95,7 @@ export function UsersPage(): JSX.Element {
       {syncMessage && <div className="banner info">{syncMessage}</div>}
       {error && (
         <div className="banner error" role="alert">
-          {error.detail || error.message}
+          {error.message}
         </div>
       )}
 
