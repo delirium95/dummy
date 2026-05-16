@@ -172,6 +172,18 @@ Frontend reads `VITE_API_BASE_URL` at build time (see
   `exactOptionalPropertyTypes`, `verbatimModuleSyntax` — there are no `any`s
   in the codebase.
 
+### pre-commit
+
+Hooks live in `.pre-commit-config.yaml` (Black, Ruff, Prettier, plus
+trailing-whitespace / EOF / merge-conflict / large-file checks). Install
+once after cloning:
+
+```bash
+cd backend && uv sync             # pulls pre-commit into the dev group
+uv run pre-commit install         # registers the git hook
+uv run pre-commit run --all-files # optional one-off run
+```
+
 ## Repository layout
 
 ```
