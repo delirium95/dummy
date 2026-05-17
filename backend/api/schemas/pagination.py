@@ -1,8 +1,9 @@
 from typing import Generic, TypeVar
 
-from fastapi import HTTPException, Query
+from fastapi import Query
 from pydantic import BaseModel, ConfigDict, Field
 
+from domain.errors import ValidationError
 from domain.shared.pagination import PageRequest, SortDirection, SortSpec
 
 T = TypeVar("T")
@@ -27,10 +28,7 @@ class PaginationParams(BaseModel):
 
     def to_page_request(self, *, allowed_fields: frozenset[str]) -> PageRequest:
         if self.sort not in allowed_fields:
-            raise HTTPException(
-                status_code=400,
-                detail=f"sort must be one of {sorted(allowed_fields)}",
-            )
+            raise ValidationError(f"sort must be one of {sorted(allowed_fields)}")
         return PageRequest(
             limit=self.limit,
             offset=self.offset,
