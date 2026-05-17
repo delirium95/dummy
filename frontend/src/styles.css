@@ -192,3 +192,92 @@ button.danger:hover:not(:disabled) {
   justify-content: flex-end;
   margin-top: 0.5rem;
 }
+
+.user-form textarea {
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font: inherit;
+  resize: vertical;
+}
+
+.header-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.state.subtle {
+  padding: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.posts-modal {
+  min-width: 520px;
+  max-width: 720px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.posts-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.posts-modal-header h2 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.posts-modal-header .actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.posts-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.post-item {
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.75rem;
+}
+
+.post-item .post-meta {
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.post-item .post-body {
+  margin: 0 0 0.5rem 0;
+  white-space: pre-wrap;
+}
+
+.post-item .post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.5rem;
+}
+
+.post-item .tag {
+  background: #e2e8f0;
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+  font-size: 0.75rem;
+}
+
+.post-item .actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}

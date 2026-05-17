@@ -8,6 +8,7 @@ interface Props {
   onSortChange: (field: string, direction: SortDirection) => void;
   onEdit: (user: User) => void;
   onDelete: (user: User) => void;
+  onViewPosts: (user: User) => void;
 }
 
 const COLUMNS: { label: string; field: string }[] = [
@@ -25,6 +26,7 @@ export function UsersTable({
   onSortChange,
   onEdit,
   onDelete,
+  onViewPosts,
 }: Props): JSX.Element {
   return (
     <table className="users-table">
@@ -52,6 +54,9 @@ export function UsersTable({
             <td>{u.email}</td>
             <td>{u.username}</td>
             <td className="actions">
+              <button type="button" onClick={() => onViewPosts(u)}>
+                Posts
+              </button>
               <button type="button" onClick={() => onEdit(u)}>
                 Edit
               </button>

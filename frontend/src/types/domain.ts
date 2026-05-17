@@ -46,6 +46,33 @@ export interface Post {
   updated_at: string;
 }
 
+export interface UserWithPosts extends User {
+  posts: Post[];
+}
+
+export interface PostWithAuthor extends Post {
+  author: User;
+}
+
+export interface CreatePostRequest {
+  user_id: number;
+  title: string;
+  body: string;
+  tags: string[];
+}
+
+export interface UpdatePostRequest {
+  title?: string;
+  body?: string;
+  tags?: string[];
+}
+
+export interface ApiErrorShape {
+  status: number;
+  code: string;
+  detail: string;
+}
+
 export interface SyncResult {
   users_added: number;
   users_updated: number;
