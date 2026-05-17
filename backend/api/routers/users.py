@@ -1,6 +1,7 @@
 from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Depends, status
 
+from api.schemas.nested import UserWithPostsResponse
 from api.schemas.pagination import PageResponse, PaginationParams, pagination_params
 from api.schemas.posts import PostResponse
 from api.schemas.users import CreateUserRequest, UpdateUserRequest, UserResponse
@@ -38,14 +39,23 @@ async def list_users(
     )
 
 
-@router.get("/{user_id}", response_model=UserResponse)
+@router.get("/{user_id}", response_model=UserWithPostsResponse)
 @inject
 async def get_user(
     user_id: int,
-    use_case: GetUserUseCase = Depends(Provide[Container.get_user_use_case]),
-) -> UserResponse:
-    user = await use_case(UserID(user_id))
-    return UserResponse.from_domain(user)
+    get_user_uc: GetUserUseCase = Depends(Provide[Container.get_user_use_case]),
+    list_posts_uc: ListPostsUseCase = Depends(Provide[Container.list_posts_use_case]),
+) -> UserWithPostsResponse:
+    user = await get_user_uc(UserID(user_id))
+    posts_page = await list_posts_uc(
+        PageRequest(limit=200, offset=0, sort=SortSpec(field="id", direction=SortDirection.ASC)),
+        UserID(user_id),
+    )
+    user_data = UserResponse.from_domain(user).model_dump()
+    return UserWithPostsResponse(
+        **user_data,
+        posts=[PostResponse.from_domain(p) for p in posts_page.items],
+    )
 
 
 @router.get("/{user_id}/posts", response_model=PageResponse[PostResponse])

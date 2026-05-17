@@ -1,6 +1,7 @@
 from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Depends, status
 
+from api.schemas.nested import PostWithAuthorResponse
 from api.schemas.pagination import PageResponse, PaginationParams, pagination_params
 from api.schemas.posts import CreatePostRequest, PostResponse, UpdatePostRequest
 from api.schemas.users import UserResponse
@@ -35,14 +36,20 @@ async def list_posts(
     )
 
 
-@router.get("/{post_id}", response_model=PostResponse)
+@router.get("/{post_id}", response_model=PostWithAuthorResponse)
 @inject
 async def get_post(
     post_id: int,
-    use_case: GetPostUseCase = Depends(Provide[Container.get_post_use_case]),
-) -> PostResponse:
-    post = await use_case(PostID(post_id))
-    return PostResponse.from_domain(post)
+    get_post_uc: GetPostUseCase = Depends(Provide[Container.get_post_use_case]),
+    get_user_uc: GetUserUseCase = Depends(Provide[Container.get_user_use_case]),
+) -> PostWithAuthorResponse:
+    post = await get_post_uc(PostID(post_id))
+    author = await get_user_uc(post.user_id)
+    post_data = PostResponse.from_domain(post).model_dump()
+    return PostWithAuthorResponse(
+        **post_data,
+        author=UserResponse.from_domain(author),
+    )
 
 
 @router.get("/{post_id}/author", response_model=UserResponse)
