@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react';
-import type { CreatePostRequest, Post } from '../types/domain';
+import type { CreatePostRequest, Post } from '@/types/domain';
 
 interface Props {
   userId: number;

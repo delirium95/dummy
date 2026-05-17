@@ -1,5 +1,5 @@
-import type { SortDirection, User } from '../types/domain';
-import { SortableHeader } from './SortableHeader';
+import type { SortDirection, User } from '@/types/domain';
+import { SortableHeader } from '@/components/SortableHeader';
 
 interface Props {
   users: User[];

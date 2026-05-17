@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react';
-import type { CreateUserRequest, User } from '../types/domain';
+import type { CreateUserRequest, User } from '@/types/domain';
 
 interface Props {
   user?: User;

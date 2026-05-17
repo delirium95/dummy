@@ -21,7 +21,11 @@
     "useDefineForClassFields": true,
     "allowImportingTsExtensions": false,
     "noEmit": true,
-    "verbatimModuleSyntax": true
+    "verbatimModuleSyntax": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
   "include": ["src"]
 }

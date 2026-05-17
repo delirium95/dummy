@@ -14,7 +14,7 @@ import type {
   UpdateUserRequest,
   User,
   UserWithPosts,
-} from '../types/domain';
+} from '@/types/domain';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL?.trim() || 'http://localhost:8000';
 

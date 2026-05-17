@@ -1,9 +1,9 @@
 import { useMemo, useState } from 'react';
-import { Modal } from '../components/Modal';
-import { Pagination } from '../components/Pagination';
-import { UserForm } from '../components/UserForm';
-import { UserPostsModal } from '../components/UserPostsModal';
-import { UsersTable } from '../components/UsersTable';
+import { Modal } from '@/components/Modal';
+import { Pagination } from '@/components/Pagination';
+import { UserForm } from '@/components/UserForm';
+import { UserPostsModal } from '@/components/UserPostsModal';
+import { UsersTable } from '@/components/UsersTable';
 import {
   errorMessage,
   useCreateUserMutation,
@@ -12,8 +12,8 @@ import {
   useRunSyncMutation,
   useUpdateUserMutation,
   type ListQuery,
-} from '../services/api';
-import type { CreateUserRequest, SortDirection, User } from '../types/domain';
+} from '@/services/api';
+import type { CreateUserRequest, SortDirection, User } from '@/types/domain';
 
 const DEFAULT_QUERY: ListQuery = {
   limit: 10,

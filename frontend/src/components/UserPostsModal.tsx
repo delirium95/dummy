@@ -5,10 +5,10 @@ import {
   useDeletePostMutation,
   useGetUserPostsQuery,
   useUpdatePostMutation,
-} from '../services/api';
-import type { CreatePostRequest, Post, User } from '../types/domain';
-import { Modal } from './Modal';
-import { PostForm } from './PostForm';
+} from '@/services/api';
+import type { CreatePostRequest, Post, User } from '@/types/domain';
+import { Modal } from '@/components/Modal';
+import { PostForm } from '@/components/PostForm';
 
 interface Props {
   user: User;

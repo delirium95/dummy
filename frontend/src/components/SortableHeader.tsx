@@ -1,4 +1,4 @@
-import type { SortDirection } from '../types/domain';
+import type { SortDirection } from '@/types/domain';
 
 interface Props {
   label: string;
