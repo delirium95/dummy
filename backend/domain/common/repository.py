@@ -1,10 +1,14 @@
 from abc import ABC, abstractmethod
+from typing import Generic, TypeVar
 
 from domain.error_messages import OBJECT_WAS_NOT_FOUND
 from domain.errors import NotFoundError
 
+Identity_T = TypeVar("Identity_T")
+Aggregate_T = TypeVar("Aggregate_T")
 
-class AbstractRepository[Identity_T, Aggregate_T](ABC):
+
+class AbstractRepository(ABC, Generic[Identity_T, Aggregate_T]):
     @abstractmethod
     async def add(self, obj: Aggregate_T, /) -> Aggregate_T:
         """Persist a new aggregate, returning the persisted form with assigned id."""
