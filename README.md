@@ -16,7 +16,7 @@ That single command brings up:
 | -------- | -------------------------- | ------------------------------------ |
 | backend  | http://localhost:8000      | Swagger UI at `/docs`                |
 | frontend | http://localhost:8080      | Static build served via nginx        |
-| db       | localhost:5433             | Postgres 16 (user/password: `app`)   |
+| db       | _internal_                 | Postgres 16, reachable at `db:5432` inside the compose network |
 
 Migrations run automatically on backend startup
 (`alembic upgrade head`), so the schema is in place before the API listens.
@@ -31,7 +31,7 @@ curl -X POST http://localhost:8000/sync
 
 - **Backend** — Python 3.12, FastAPI, SQLAlchemy 2.x async, asyncpg, Alembic,
   Pydantic v2, dependency-injector, httpx.
-- **Frontend** — React 18, TypeScript strict mode, Vite.
+- **Frontend** — React 18, TypeScript strict mode, Vite, Redux Toolkit Query.
 - **DB** — Postgres 16.
 
 ## Architecture
@@ -100,23 +100,27 @@ backend/
 - **DI.** `containers.py` exposes use cases as `providers.Factory`; FastAPI
   endpoints receive them through `Depends(Provide[...])`.
 - **Frontend** is a single page (`UsersPage`) with sortable columns,
-  offset/limit pagination, an edit modal with client-side validation, delete
-  confirmation, and explicit loading/error/empty states. The API layer
-  (`src/api/`) is the only place that knows about `fetch` — components are
-  pure UI.
+  offset/limit pagination, edit/create modals with client-side validation,
+  delete confirmation, a per-user posts modal (list / create / edit / delete),
+  and explicit loading/error/empty states. All HTTP lives in
+  `src/services/api.ts` (Redux Toolkit Query) with the store wired in
+  `src/store/store.ts` — components only consume generated hooks
+  (`useGetUsersQuery`, `useCreateUserMutation`, …) and never touch `fetch`
+  directly. Cache invalidation by tag (`User` / `Post`, with `LIST` and
+  `USER-<id>` scopes) keeps the table in sync after mutations and syncs.
 
 ## API
 
 | Method  | Path                       | Description                            |
 | ------- | -------------------------- | -------------------------------------- |
 | GET     | `/users`                   | List users (limit/offset/sort/direction) |
-| GET     | `/users/{id}`              | Get user                               |
+| GET     | `/users/{id}`              | Get user with embedded posts           |
 | GET     | `/users/{id}/posts`        | List posts of a given user             |
 | POST    | `/users`                   | Create user                            |
 | PUT     | `/users/{id}`              | Update user                            |
 | DELETE  | `/users/{id}`              | Delete user                            |
 | GET     | `/posts`                   | List posts                             |
-| GET     | `/posts/{id}`              | Get post                               |
+| GET     | `/posts/{id}`              | Get post with embedded author          |
 | GET     | `/posts/{id}/author`       | Get the related author                 |
 | POST    | `/posts`                   | Create post                            |
 | PUT     | `/posts/{id}`              | Update post                            |
