@@ -22,3 +22,6 @@ frontend/.vite/
 .idea/
 .vscode/
 .DS_Store
+
+# Vite TS incremental build cache
+frontend/tsconfig.tsbuildinfo
